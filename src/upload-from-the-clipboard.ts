@@ -15,18 +15,17 @@ interface Preferences {
  * It verifies that a file is present (and not text, HTML, or empty).
  */
 async function getClipboardFilePath(): Promise<string> {
-    const clipboardContent = await Clipboard.read();
-    if (clipboardContent.file && typeof clipboardContent.file === "string" && clipboardContent.file.trim() !== "") {
-      let filePath = clipboardContent.file.trim();
-      if (filePath.startsWith("file://")) {
-        // Convert file URL to local path
-        filePath = new URL(filePath).pathname;
-      }
-      return filePath;
+  const clipboardContent = await Clipboard.read();
+  if (clipboardContent.file && typeof clipboardContent.file === "string" && clipboardContent.file.trim() !== "") {
+    let filePath = clipboardContent.file.trim();
+    if (filePath.startsWith("file://")) {
+      // Convert file URL to local path
+      filePath = new URL(filePath).pathname;
     }
-    throw new Error("Clipboard does not contain a valid file. Please copy exactly one file.");
+    return filePath;
   }
-  
+  throw new Error("Clipboard does not contain a valid file. Please copy exactly one file.");
+}
 
 /**
  * Uploads a local file to WebDAV.
