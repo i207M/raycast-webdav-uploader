@@ -100,7 +100,13 @@ export default async function main() {
     await Clipboard.copy(fileUrl);
 
     await showToast(Toast.Style.Success, "File uploaded", `Remote URL copied to clipboard:\n${fileUrl}`);
-  } catch (error: any) {
-    await showToast(Toast.Style.Failure, "Upload failed", error.message);
+  } catch (error: unknown) {
+    let message = "Unknown error";
+    if (error instanceof Error) {
+      message = error.message;
+    } else {
+      message = String(error);
+    }
+    await showToast(Toast.Style.Failure, "Upload failed", message);
   }
 }
