@@ -6,7 +6,7 @@
   "icon": "extension-icon.png",
   "author": "sevem",
   "categories": [
-    "Data"
+    "Applications"
   ],
   "license": "MIT",
   "commands": [
@@ -67,7 +67,7 @@
       "name": "baseDir",
       "description": "Base directory to upload files",
       "type": "textfield",
-      "required": false,
+      "required": true,
       "title": "Base Directory",
       "placeholder": "/",
       "default": "/"
