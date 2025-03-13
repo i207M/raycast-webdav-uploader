@@ -11,8 +11,9 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "upload-from-the-clipboard",
-      "title": "Upload from the Clipboard",
+      "name": "upload-from-clipboard",
+      "title": "Upload from Clipboard",
+      "subtitle": "WebDAV Uploader",
       "description": "Upload files to WebDAV",
       "mode": "no-view"
     }

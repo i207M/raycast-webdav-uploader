@@ -3,13 +3,6 @@ import { createClient } from "webdav";
 import * as fs from "fs";
 import * as path from "path";
 
-interface Preferences {
-  webdavUrl: string;
-  username: string;
-  password: string;
-  baseDir: string;
-}
-
 /**
  * Reads the clipboard using Raycast's Clipboard API.
  * It verifies that a file is present (and not text, HTML, or empty).
@@ -20,7 +13,7 @@ async function getClipboardFilePath(): Promise<string> {
     let filePath = clipboardContent.file.trim();
     if (filePath.startsWith("file://")) {
       // Convert file URL to local path
-      filePath = new URL(filePath).pathname;
+      filePath = decodeURIComponent(new URL(filePath).pathname);
     }
     return filePath;
   }
@@ -32,7 +25,7 @@ async function getClipboardFilePath(): Promise<string> {
  * The file is stored under `basedir/year/month/filename`. If the file exists,
  * a counter (e.g. filename-1.txt) is appended until an unused name is found.
  */
-async function uploadFile(localFilePath: string, preferences: Preferences): Promise<string> {
+async function uploadFile(localFilePath: string, preferences: Preferences.UploadFromClipboard): Promise<string> {
   // Verify that the local path exists and is a file.
   const stats = await fs.promises.stat(localFilePath);
   if (!stats.isFile()) {
@@ -84,7 +77,7 @@ async function uploadFile(localFilePath: string, preferences: Preferences): Prom
 export default async function main() {
   try {
     // Retrieve extension preferences.
-    const preferences = getPreferenceValues<Preferences>();
+    const preferences = getPreferenceValues<Preferences.UploadFromClipboard>();
 
     // Get the file path from the clipboard.
     const filePath = await getClipboardFilePath();
